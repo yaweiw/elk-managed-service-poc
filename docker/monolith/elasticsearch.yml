@@ -1,0 +1,3 @@
+# Elasticsearch Config
+network.host: localhost
+http.port: 9200

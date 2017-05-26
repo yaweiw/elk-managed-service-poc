@@ -1,0 +1,9 @@
+stream {
+    upstream tcpbackend {
+        server localhost:5044;
+    }
+    server {
+        listen 5044;
+        proxy_pass tcpbackend;
+    }
+}      
