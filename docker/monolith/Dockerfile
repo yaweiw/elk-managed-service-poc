@@ -45,25 +45,7 @@ COPY 30-elasticsearch-output.conf /etc/logstash/conf.d/30-elasticsearch-output.c
 RUN service logstash configtest
 
 # start.sh
-RUN echo sudo service elasticsearch restart >> /usr/local/sbin/start.sh
-RUN echo sudo service kibana restart >> /usr/local/sbin/start.sh
-RUN echo sudo service nginx restart >> /usr/local/sbin/start.sh
-RUN echo sudo service logstash restart >> /usr/local/sbin/start.sh 
-
-# Load Kibana Dashboard
-RUN apt-get -y install curl
-RUN echo cd ~ >> /usr/local/sbin/start.sh 
-RUN echo curl -L -O https://download.elastic.co/beats/dashboards/beats-dashboards-1.1.0.zip >> /usr/local/sbin/start.sh 
-RUN echo apt-get -y install unzip >> /usr/local/sbin/start.sh 
-RUN echo unzip beats-dashboards-*.zip >> /usr/local/sbin/start.sh 
-RUN echo cd beats-dashboards-* >> /usr/local/sbin/start.sh 
-RUN echo ./load.sh >> /usr/local/sbin/start.sh 
-
-# Load Filebeat index template
-RUN echo cd ~ >> /usr/local/sbin/start.sh 
-RUN echo curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/d8c479e2a1adcea8b1fe86570e42abab0f10f364/filebeat-index-template.json >> /usr/local/sbin/start.sh 
-RUN echo curl -XPUT 'http://localhost:9200/_template/filebeat?pretty' -d@filebeat-index-template.json >> /usr/local/sbin/start.sh 
-
+COPY start.sh /usr/local/sbin/start.sh 
 RUN chmod +x /usr/local/sbin/start.sh
 CMD /usr/local/sbin/start.sh && bash
 
