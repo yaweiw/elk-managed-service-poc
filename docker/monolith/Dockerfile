@@ -47,7 +47,7 @@ RUN service logstash configtest
 # start.sh
 COPY start.sh /usr/local/sbin/start.sh 
 RUN chmod +x /usr/local/sbin/start.sh
-CMD /usr/local/sbin/start.sh && bash
+CMD /usr/local/sbin/start.sh && tail -f /dev/null
 
 EXPOSE 80 5044
 
