@@ -30,5 +30,14 @@ Poc project for ELK managed service on Azure
         * ssh docker@<ip of the node>. User name "docker" PWD "tcuser"
         * curl -v http://ip
     * minikube stop
-
+* Run multi-tiered elk with docker compose
+    * docker-compose up or docker-compose up -d
+    * http://locahost:5601 to access kibana
+    * Load beats dashboard https://artifacts.elastic.co/downloads/beats/beats-dashboards/beats-dashboards-5.4.1.zip
+    * nc localhost 500 < <path to your log> to inject logs.
+    Note: following ports are used:
+    * 5000: Logstash input
+    * 9200: Elasticsearch HTTP REST
+    * 9300: Elasticsearch TCP
+    * 5601: Kibana
 
