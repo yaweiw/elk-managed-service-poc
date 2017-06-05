@@ -1,0 +1,7 @@
+server:
+  port: ${KIBANA_PORT}
+  host: ${KIBANA_HOST}
+
+elasticsearch:
+  url: ${ELASTICSEARCH_URL}
+  
