@@ -15,6 +15,8 @@ ENV PLATFORM linux-x86_64
 ENV DOWNLOAD_URL "https://artifacts.elastic.co/downloads/kibana/kibana-${KIBANA_VERSION}-${PLATFORM}.tar.gz"
 ENV SHA1_URL "https://artifacts.elastic.co/downloads/kibana/kibana-${KIBANA_VERSION}-${PLATFORM}.tar.gz.sha1"
 
+RUN apk update && apk add ca-certificates openssl
+
 RUN cd /tmp \
   && echo "Install Kibana..." \
   && wget -O kibana.tar.gz "$DOWNLOAD_URL" \
