@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    component: kibana
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: kibana
+  spec:
+    containers:
+    - name: kibana
+      image: kibana-kubernetes:1.0.0
