@@ -10,7 +10,9 @@ spec:
     metadata:
       labels:
         component: kibana
-  spec:
-    containers:
-    - name: kibana
-      image: kibana-kubernetes:1.0.0
+    spec:
+      containers:
+      - name: kibana
+        image: zhiyuan.azurecr.io/kibana 
+      imagePullSecrets:
+      - name: azure-registry
