@@ -36,6 +36,7 @@ elasticsearch-data  3        1        2s
 NAME  TYPE
 fast  kubernetes.io/azure-disk  
 slow  kubernetes.io/azure-disk  
+
 ## Verify the installation
 * kubectl proxy to launch k8s dashboard
 * kubectl get svc
@@ -52,3 +53,7 @@ slow  kubernetes.io/azure-disk
 * es-discovery-svc.yaml - discovery service
 * es-master.yaml - master node, intended for clustering management only, no data, no HTTP API
 * es-svc.yaml - elasticsearch service in k8s
+
+## Important Notes:
+* statefulset is a beta feature.
+* Storage account is required to have 'vhds' container in it as a prerequesite. https://github.com/kubernetes/kubernetes/issues/38362. 
