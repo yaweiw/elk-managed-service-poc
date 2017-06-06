@@ -1,11 +1,5 @@
-FROM alpine:3.6
+FROM java:8u111-jre
 
-# Install JDK
-ENV JAVA_HOME=/usr/lib/jvm/default-jvm/jre
-
-RUN apk upgrade --update-cache; \
-    apk add openjdk8-jre
-    
 
 # Download & Configure kibana
 EXPOSE 5601
@@ -15,7 +9,7 @@ ENV PLATFORM linux-x86_64
 ENV DOWNLOAD_URL "https://artifacts.elastic.co/downloads/kibana/kibana-${KIBANA_VERSION}-${PLATFORM}.tar.gz"
 ENV SHA1_URL "https://artifacts.elastic.co/downloads/kibana/kibana-${KIBANA_VERSION}-${PLATFORM}.tar.gz.sha1"
 
-RUN apk update && apk add ca-certificates openssl
+RUN apk update && apk add openssl
 
 RUN cd /tmp \
   && echo "Install Kibana..." \
