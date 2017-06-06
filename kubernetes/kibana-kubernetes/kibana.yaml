@@ -13,6 +13,7 @@ spec:
     spec:
       containers:
       - name: kibana
-        image: zhiyuan.azurecr.io/kibana 
+        image: zhiyuan.azurecr.io/kibana:1.0.0
+        imagePullPolicy: Always
       imagePullSecrets:
       - name: azure-registry
