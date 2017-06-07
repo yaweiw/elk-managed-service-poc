@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    component: kibana
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: elkacr.azurecr.io/kibana:1.0.0
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: azure-registry

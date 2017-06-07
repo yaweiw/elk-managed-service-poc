@@ -45,16 +45,27 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: "CLUSTER_NAME"
-          value: "myesdb"
-        - name: NODE_MASTER
-          value: "false"
-        - name: NODE_INGEST
-          value: "false"
-        - name: HTTP_ENABLE
-          value: "false"
-        - name: "ES_JAVA_OPTS"
-          value: "-Xms256m -Xmx256m"
+        - name: DISCOVERY_SERVICE
+          value: {{template "fullname" .}}-discovery
+        {{- range $key, $value :=  .Values.common.env }}
+        - name: {{ $key | upper | replace "-" "_" }}
+          value: {{ $value | quote }}
+        {{- end }}
+        {{- range $key, $value :=  .Values.data.env }}
+        - name: {{ $key | upper | replace "-" "_" }}
+          value: {{ $value | quote }}
+        {{- end }}
+
+#        - name: "CLUSTER_NAME"
+#          value: "myesdb"
+#        - name: NODE_MASTER
+#          value: "false"
+#        - name: NODE_INGEST
+#          value: "false"
+#        - name: HTTP_ENABLE
+#          value: "false"
+#        - name: "ES_JAVA_OPTS"
+#          value: "-Xms256m -Xmx256m"
         ports:
         - containerPort: 9300
           name: transport

@@ -59,6 +59,7 @@ master:
     NUMBER_OF_MASTERS: "2"
 
 service:
-  type: LoadBalancer
+  # change it to LoadBalancer for public accessibility
+  type: ClusterIP 
   httpPort: 9200
   transportPort: 9300
