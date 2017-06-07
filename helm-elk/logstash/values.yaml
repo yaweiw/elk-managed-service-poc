@@ -11,3 +11,5 @@ service:
   name: logstash
   type: LoadBalancer
   port: 5403
+imagePullSecrets:
+  name: azure-registry

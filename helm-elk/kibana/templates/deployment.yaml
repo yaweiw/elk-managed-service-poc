@@ -17,3 +17,5 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.port }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets.name }}

@@ -11,4 +11,5 @@ service:
   name: kibana
   type: LoadBalancer
   port: 5601
-
+imagePullSecrets:
+  name: azure-registry
