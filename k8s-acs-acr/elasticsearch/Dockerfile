@@ -8,7 +8,7 @@ ENV PLATFORM linux-x86_64
 ENV DOWNLOAD_URL "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}.tar.gz"
 
 RUN cd /tmp \
-  && apt update && apt install sudo uuid-runtime \
+  && apt update && apt install -y sudo uuid-runtime \
   && echo "Install Elasticsearch..." \
   && wget -O elasticsearch.tar.gz "$DOWNLOAD_URL" \
   && tar -xf elasticsearch.tar.gz \
@@ -31,4 +31,4 @@ ENV NUMBER_OF_MASTERS 1
 
 COPY run.sh /
 
-CMD ["bash"]
+CMD ["/run.sh"]
