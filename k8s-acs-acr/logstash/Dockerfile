@@ -18,5 +18,8 @@ RUN cd /tmp \
 WORKDIR /logstash
 
 COPY pipeline/logstash.conf /logstash.conf
+COPY run.sh /run.sh
 
-CMD /logstash/bin/logstash -e -c /logstash.conf
+ENV ELASTICSEARCH_URL "http://elasticsearch:9200"
+
+CMD ["/run.sh"]
