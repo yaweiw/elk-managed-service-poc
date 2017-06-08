@@ -1,22 +1,20 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+# StatefulSet
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
-  name: {{template "fullname" .}}-client
+  name: {{template "fullname" .}}-data
   labels:
     component: {{template "fullname" .}}
-    role: client
+    role: data
 spec:
-  replicas: {{ .Values.client.replicas }}
+  serviceName: {{template "fullname" .}}-data
+  replicas: 3
   template:
     metadata:
       labels:
         component: {{template "fullname" .}}
-        role: client
+        role: data
       annotations:
-        # Elasticsearch uses a hybrid mmapfs / niofs directory by default to
-        # store its indices. The default operating system limits on mmap counts
-        # is likely to be too low, which may result in out of memory exceptions,
-        # so we use vm.max_map_count=262144 to increase that value.
         pod.beta.kubernetes.io/init-containers: '[
           {
           "name": "sysctl",
@@ -30,13 +28,12 @@ spec:
         ]'
     spec:
       containers:
-      - name: es-client
+      - name: {{template "fullname" .}}-data
         securityContext:
-          privileged: false
+          privileged: true
           capabilities:
             add:
               - IPC_LOCK
-              - SYS_RESOURCE
         image: "{{ .Values.common.image.repository }}:{{ .Values.common.image.tag }}"
         imagePullPolicy: {{ .Values.common.image.pullPolicy }}
         env:
@@ -54,21 +51,26 @@ spec:
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
-        {{- range $key, $value :=  .Values.client.env }}
+        {{- range $key, $value :=  .Values.data.env }}
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
         ports:
-        - containerPort: 9200
-          name: http
-          protocol: TCP
         - containerPort: 9300
           name: transport
           protocol: TCP
         volumeMounts:
-        - name: storage
+        - name: es-persistent-storage
           mountPath: /data
-      volumes:
-        - emptyDir:
-            medium: ""
-          name: "storage"
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets.name }}
+  volumeClaimTemplates:
+  - metadata:
+      name: es-persistent-storage
+      annotations:
+        volume.beta.kubernetes.io/storage-class: slow
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi #todo

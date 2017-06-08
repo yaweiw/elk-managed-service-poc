@@ -3,13 +3,13 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}
   labels:
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    component: {{template "fullname" .}}
 spec:
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ template "fullname" . }}
+        component: {{ template "fullname" . }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
