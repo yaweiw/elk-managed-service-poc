@@ -65,6 +65,8 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets.name }}
       volumes:
         - emptyDir:
             medium: ""

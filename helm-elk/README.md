@@ -59,9 +59,13 @@ elasticsearch-data       None          <none>       9300/TCP                    
 * es-discovery-svc.yaml - discovery service
 * es-master.yaml - master node, intended for clustering management only, no data, no HTTP API
 * es-svc.yaml - elasticsearch service in k8s
-* ki-svc.yaml - kibana service in k8s
-* ki.yaml - kibana deployment definition
 
 ## Important Notes:
 * statefulset is a beta feature.
 * Storage account is required to have 'vhds' container in it as a prerequesite. https://github.com/kubernetes/kubernetes/issues/38362. 
+* Create imagepullsecret named "azure-registry"
+```DOCKER_REGISTRY_SERVER=elkacr.azurecr.io```
+```DOCKER_USER=elkacr```
+```DOCERK_PASSWORD=+op+=6//=F/=/+=JkpA0i=/=WTeTdOYB```
+```DOCKER_EMAIL=yaweiw@microsoft.com```
+```kubectl create secret docker-registry azure-registry --docker-server=DOCKER_REGISTRY_SERVER --docker-username=DOCKER_USER --docker-password=DOCKER_PASSWORD --docker-email=DOCKER_EMAIL```

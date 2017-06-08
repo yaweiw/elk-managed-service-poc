@@ -4,7 +4,7 @@
 nameOverride: kibana
 replicaCount: 2
 image:
-  repository: zhiyuan.azurecr.io/kibana
+  repository: elkacr.azurecr.io/kibana
   tag: 1.0.0
   pullPolicy: Always
 service:

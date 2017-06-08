@@ -1,7 +1,7 @@
 common:
   image:
-    repository: quay.io/pires/docker-elasticsearch-kubernetes
-    tag: 5.4.0
+    repository: elkacr.azurecr.io/elasticsearch
+    tag: 1.0.0
     pullPolicy: Always
   env:
     CLUSTER_NAME: "myesdb"
@@ -63,3 +63,5 @@ service:
   type: ClusterIP 
   httpPort: 9200
   transportPort: 9300
+imagePullSecrets:
+  name: azure-registry

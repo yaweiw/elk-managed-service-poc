@@ -1,20 +1,22 @@
-# StatefulSet
-apiVersion: apps/v1beta1
-kind: StatefulSet
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: {{template "fullname" .}}-data
+  name: {{template "fullname" .}}-client
   labels:
     component: {{template "fullname" .}}
-    role: data
+    role: client
 spec:
-  serviceName: {{template "fullname" .}}-data
-  replicas: 3
+  replicas: {{ .Values.client.replicas }}
   template:
     metadata:
       labels:
         component: {{template "fullname" .}}
-        role: data
+        role: client
       annotations:
+        # Elasticsearch uses a hybrid mmapfs / niofs directory by default to
+        # store its indices. The default operating system limits on mmap counts
+        # is likely to be too low, which may result in out of memory exceptions,
+        # so we use vm.max_map_count=262144 to increase that value.
         pod.beta.kubernetes.io/init-containers: '[
           {
           "name": "sysctl",
@@ -28,14 +30,15 @@ spec:
         ]'
     spec:
       containers:
-      - name: {{template "fullname" .}}-data
+      - name: es-client
         securityContext:
-          privileged: true
+          privileged: false
           capabilities:
             add:
               - IPC_LOCK
-        image: quay.io/pires/docker-elasticsearch-kubernetes:5.4.0
-        imagePullPolicy: Always
+              - SYS_RESOURCE
+        image: "{{ .Values.common.image.repository }}:{{ .Values.common.image.tag }}"
+        imagePullPolicy: {{ .Values.common.image.pullPolicy }}
         env:
         - name: NAMESPACE
           valueFrom:
@@ -51,35 +54,23 @@ spec:
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
-        {{- range $key, $value :=  .Values.data.env }}
+        {{- range $key, $value :=  .Values.client.env }}
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
-
-#        - name: "CLUSTER_NAME"
-#          value: "myesdb"
-#        - name: NODE_MASTER
-#          value: "false"
-#        - name: NODE_INGEST
-#          value: "false"
-#        - name: HTTP_ENABLE
-#          value: "false"
-#        - name: "ES_JAVA_OPTS"
-#          value: "-Xms256m -Xmx256m"
         ports:
+        - containerPort: 9200
+          name: http
+          protocol: TCP
         - containerPort: 9300
           name: transport
           protocol: TCP
         volumeMounts:
-        - name: es-persistent-storage
+        - name: storage
           mountPath: /data
-  volumeClaimTemplates:
-  - metadata:
-      name: es-persistent-storage
-      annotations:
-        volume.beta.kubernetes.io/storage-class: slow
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 10Gi #todo
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets.name }}
+      volumes:
+        - emptyDir:
+            medium: ""
+          name: "storage"

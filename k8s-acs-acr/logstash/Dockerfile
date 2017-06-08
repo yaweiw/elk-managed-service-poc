@@ -14,11 +14,11 @@ RUN cd /tmp \
   && tar -xf logstash.tar.gz \
   && mv logstash-$VERSION /logstash
 
-
 WORKDIR /logstash
 
 COPY pipeline/logstash.conf /logstash.conf
 COPY run.sh /run.sh
+RUN chmod +x /run.sh
 
 ENV ELASTICSEARCH_URL "http://elasticsearch:9200"
 

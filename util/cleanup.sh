@@ -1,9 +1,35 @@
-kubectl delete storageclass --all
+#!/bin/bash
+#
+# Perform clean up work.
 
-kubectl delete deployment --all
-kubectl delete replicaset --all
-kubectl delete pod --all
-kubectl delete svc --all
+export PATH=/usr/local/bin/:$PATH
 
-kubectl delete pvc --all
-kubectl delete statefulsets --all
+#######################################
+# Cleanup provisoned ELK resources
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
+cleanup() {
+  kubectl delete storageclass slow
+  kubectl delete storageclass fast
+
+  kubectl delete deployment -l component=kibana
+  kubectl delete deployment -l component=elasticsearch
+
+  kubectl delete replicaset -l component=kibana
+  kubectl delete replicaset -l component=elasticsearch
+  
+  kubectl delete svc -l component=kibana
+  kubectl delete svc -l component=elasticsearch
+  
+  kubectl delete statefulsets -l component=elasticsearch;role=data
+  kubectl delete svc -l component=elasticsearch;role=data
+  kubectl delete pvc -l component=elasticsearch;role=data
+  kubectl delete pod -l component=elasticsearch;role=data
+  kubectl delete pv --all
+}
+
+cleanup
+
