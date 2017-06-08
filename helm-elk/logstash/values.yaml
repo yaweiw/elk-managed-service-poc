@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 nameOverride: logstash
-replicaCount: 1
+replicaCount: 2
 image:
   repository: zhiyuan.azurecr.io/logstash
   tag: 1.0.0
