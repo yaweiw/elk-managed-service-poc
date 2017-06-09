@@ -1,43 +1,37 @@
-## elk-managed-service-poc
-Poc project for ELK managed service on Azure
-## docker/monolith
-* contains dockerfile and configs to setup a single node ELK cluster
-* Run elk locally via docker deamon
-    * cd docker/monolith
-    * docker build .
-    * docker run --rm -it -p 80:80 -p 5044:5044 <image_id>
-    * access to http://hostname or ip on the same server or from different ones
-    * follow this link: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html to install filebeat for log shipping on your client machine.
-    * E.g. on mac do the following:
-        * curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.4.0-darwin-x86_64.tar.gz
-        * tar xzvf filebeat-5.4.0-darwin-x86_64.tar.gz
-        * modify filebeat.yml:
-            * paths e.g. /Users/XXX/*.log
-            * output.logstash e.g. hosts: ["localhost:5044"]
-            * ssl.certificate_authorities
-            * ssl.certificate
-            * ssl.key
-* Run elk locally via Minikube
-    * cd docker/monolith
-    * docker build . -t elk-image-kube:1.0.0
-    * kubectl run elk-server --image=elk-image-kube:1.0.0 --port=80
-    * kubectl expose deployment elk-server --type=NodePort
-    * kubectl get pod
-    * curl $(minikube service elk-server --url)
-    * You can also ssh to the node to check if services are up:
-        * kubectl get nodes
-        * kubectl describe node minikube | grep '^Address'
-        * ssh docker@<ip of the node>. User name "docker" PWD "tcuser"
-        * curl -v http://ip
-    * minikube stop
-* Run multi-tiered elk with docker compose
-    * docker-compose up or docker-compose up -d
-    * http://locahost:5601 to access kibana
-    * Load beats dashboard https://artifacts.elastic.co/downloads/beats/beats-dashboards/beats-dashboards-5.4.1.zip
-    * nc localhost 500 < <path to your log> to inject logs.
-    Note: following ports are used:
-    * 5000: Logstash input
-    * 9200: Elasticsearch HTTP REST
-    * 9300: Elasticsearch TCP
-    * 5601: Kibana
+# Use AZ to create kubernetes cluster in Azure
+## Create
+* RESOURCE_GROUP=elk-rg
+* LOCATION=westus
+* az group create --name=$RESOURCE_GROUP --location=$LOCATION
+* DNS_PREFIX=elk-kube-acs
+* CLUSTER_NAME=elk-kube-acs-cluster
+* az acs create --orchestrator-type=kubernetes --resource-group $RESOURCE_GROUP --name=$CLUSTER_NAME --dns-prefix=$DNS_PREFIX --generate-ssh-keys
+Note: it's also required to create a storage account e.g. azdisksa (with vhds container) for storage class and provision a ACR e.g. elkacr for docker image storage.
+## Connect
+* az acs kubernetes install-cli (if kubectl not installed yet)
+* az acs kubernetes get-credentials --resource-group=$RESOURCE_GROUP --name=$CLUSTER_NAME
+* kubectl get nodes
 
+## Verify
+* kubectl run nginx --image nginx
+* kubectl get pods
+
+## Expose the service to the world
+* kubectl expose deployments nginx --port=80 --type=LoadBalancer
+* kubectl get svc - monitor the service from pending to ready
+
+## Browse the K8s UI
+* kubectl proxy
+* http://localhost:8001/ui
+
+## Remote sessions to containers
+* kubectl get pods
+* kubectl exec <pod name> <command>
+
+# Build your own ELK images and push to ACR
+## Instructions:
+1. Create a container registry in ACR e.g. ```elkacr.azurecr.io```
+2. Access keys blade. Get your Username and password for authentication to ACR
+3. Run ```docker login``` and input username and password
+4. Go to respective directories and run e.g. ```docker build -t elkacr.azurecr.io/kibana:1.0.0 .``` to build docker image
+5. Run ```docker push elkacr.azurecr.io/kibana:1.0.0``` to push image to [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli)
