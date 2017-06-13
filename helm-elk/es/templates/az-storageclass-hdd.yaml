@@ -3,8 +3,9 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
   name: slow
+  namespace: {{ .Values.common.namespace }}
 provisioner: kubernetes.io/azure-disk
 parameters:
   skuName: Standard_LRS
   location: westus
-  storageAccount: azdisksa
+  storageAccount: {{ .Values.data.storageAccount }}

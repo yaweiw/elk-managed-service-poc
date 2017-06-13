@@ -1,10 +1,11 @@
 common:
+  namespace: elk-cluster-ns
   image:
     repository: elkacr.azurecr.io/elasticsearch
     tag: 1.0.0
     pullPolicy: Always
   env:
-    CLUSTER_NAME: "myesdb"
+    CLUSTER_NAME: "elk-kube-acs-cluster"
     # Uncomment this if you get the "No up-and-running site-local (private) addresses" error
     # NETWORK_HOST: "_eth0_"
 
@@ -15,6 +16,7 @@ common:
 client:
   # It isn't common to need more than 2 client nodes.
   replicas: 2
+  
   env:
     NODE_DATA: "false"
     NODE_MASTER: "false"
@@ -32,13 +34,14 @@ client:
 data:
   # This count will depend on your data and computation needs.
   replicas: 2
+  storageAccount: azdisksa
   env:
     NODE_DATA: "true"
     NODE_MASTER: "false"
     NODE_INGEST: "false"
     HTTP_ENABLE: "false"
     ES_JAVA_OPTS: "-Xms256m -Xmx256m"
-
+    
 # The master node is responsible for lightweight cluster-wide actions such as
 # creating or deleting an index, tracking which nodes are part of the 
 # cluster, and deciding which shards to allocate to which nodes. It is 

@@ -1,4 +1,4 @@
 apiVersion: v1
 description: Kibana helm chart for Kubernetes
 name: kibana
-version: 0.1.0
+version: 0.0.1

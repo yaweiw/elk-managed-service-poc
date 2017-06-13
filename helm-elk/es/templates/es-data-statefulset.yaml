@@ -3,6 +3,7 @@ apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: {{template "fullname" .}}-data
+  namespace: {{ .Values.common.namespace }}
   labels:
     component: {{template "fullname" .}}
     role: data

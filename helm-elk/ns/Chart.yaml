@@ -1,6 +1,6 @@
 apiVersion: v1
-description: Helm chart for ElasticSearch
-name: elasticsearch
+description: Helm chart for elk cluster namespace
+name: elknamespace
 version: 0.0.1
 maintainers:
   - name:

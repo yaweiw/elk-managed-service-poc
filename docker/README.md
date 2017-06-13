@@ -32,6 +32,6 @@ Note: it's also required to create a storage account e.g. azdisksa (with vhds co
 ## Instructions:
 1. Create a container registry in ACR e.g. ```elkacr.azurecr.io```
 2. Access keys blade. Get your Username and password for authentication to ACR
-3. Run ```docker login``` and input username and password
+3. Run ```docker login elkacr.azurecr.io``` and input username and password
 4. Go to respective directories and run e.g. ```docker build -t elkacr.azurecr.io/kibana:1.0.0 .``` to build docker image
 5. Run ```docker push elkacr.azurecr.io/kibana:1.0.0``` to push image to [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli)
