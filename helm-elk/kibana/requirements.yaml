@@ -1,0 +1,5 @@
+# requirements.yaml
+dependencies:
+- name: elasticsearch
+  version: "0.0.1"
+  repository: "file://../es"

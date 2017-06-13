@@ -12,23 +12,31 @@ export PATH=/usr/local/bin/:$PATH
 #   None
 #######################################
 cleanup() {
-  kubectl delete storageclass slow
-  kubectl delete storageclass fast
-
-  kubectl delete deployment -l component=kibana
-  kubectl delete deployment -l component=elasticsearch
-
-  kubectl delete replicaset -l component=kibana
-  kubectl delete replicaset -l component=elasticsearch
   
-  kubectl delete svc -l component=kibana
-  kubectl delete svc -l component=elasticsearch
+  kubectl delete storageclass slow --namespace elk-cluster-ns
+  kubectl delete storageclass fast --namespace elk-cluster-ns
+
+  kubectl delete deployment -l component=kibana --namespace elk-cluster-ns
+  kubectl delete deployment -l component=elasticsearch --namespace elk-cluster-ns
+  kubectl delete deployment -l component=logstash --namespace elk-cluster-ns
+
+  kubectl delete replicaset -l component=kibana --namespace elk-cluster-ns
+  kubectl delete replicaset -l component=elasticsearch --namespace elk-cluster-ns
+  kubectl delete replicaset -l component=logstash --namespace elk-cluster-ns
+
+  kubectl delete daemonset -l component=filebeat --namespace elk-cluster-ns
   
-  kubectl delete statefulsets -l component=elasticsearch;role=data
-  kubectl delete svc -l component=elasticsearch;role=data
-  kubectl delete pvc -l component=elasticsearch;role=data
-  kubectl delete pod -l component=elasticsearch;role=data
-  kubectl delete pv --all
+  kubectl delete svc -l component=kibana --namespace elk-cluster-ns
+  kubectl delete svc -l component=elasticsearch --namespace elk-cluster-ns
+  kubectl delete svc -l component=logstash --namespace elk-cluster-ns
+  
+  kubectl delete statefulsets --namespace elk-cluster-ns -l component=elasticsearch;role=data
+  kubectl delete svc --namespace elk-cluster-ns -l component=elasticsearch;role=data
+  kubectl delete pvc --namespace elk-cluster-ns -l component=elasticsearch;role=data 
+  kubectl delete pod --namespace elk-cluster-ns -l component=elasticsearch;role=data
+  kubectl delete pv --all --namespace elk-cluster-ns
+
+  kubectl delete namespace elk-cluster-ns
 }
 
 cleanup

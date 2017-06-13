@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Filebeat helm chart for Kubernetes
+name: filebeat
+version: 0.0.1

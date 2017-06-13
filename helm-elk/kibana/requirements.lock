@@ -1,0 +1,10 @@
+dependencies:
+- condition: ""
+  enabled: false
+  import-values: null
+  name: elasticsearch
+  repository: file://../es
+  tags: null
+  version: 0.0.1
+digest: sha256:bc7bf993e9f393e4be9e5f61aa5208b6c043acefbb1b7b8505d15c044c4e133a
+generated: 2017-06-13T14:05:56.938415046+08:00
