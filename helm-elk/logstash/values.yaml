@@ -1,6 +1,8 @@
 # Default values for logstash.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+common:
+  namespace: elk-cluster-ns
 nameOverride: logstash
 replicaCount: 2
 image:
