@@ -1,7 +1,7 @@
 common:
   namespace: elk-cluster-ns
   image:
-    repository: elkacr.azurecr.io/elasticsearch
+    repository: elkimages.azurecr.io/elasticsearch
     tag: 1.0.0
     pullPolicy: Always
   env:
@@ -35,6 +35,7 @@ data:
   # This count will depend on your data and computation needs.
   replicas: 2
   storageAccount: azdisksa
+  location: westus
   env:
     NODE_DATA: "true"
     NODE_MASTER: "false"

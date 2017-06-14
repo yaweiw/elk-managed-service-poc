@@ -1,5 +1,0 @@
-# requirements.yaml
-dependencies:
-- name: elknamespace
-  version: "0.0.1"
-  repository: "file://../ns"
