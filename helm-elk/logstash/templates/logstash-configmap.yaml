@@ -5,5 +5,5 @@ data:
 kind: ConfigMap
 metadata:
   name:  {{ template "fullname" . }}
-  namespace: elk-cluster-ns
+  namespace: {{ .Values.common.namespace }}
 

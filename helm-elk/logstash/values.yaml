@@ -13,3 +13,5 @@ service:
   port: 5043
 imagePullSecrets:
   name: azure-registry
+configuration:
+  path: /conf

@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "fullname" . }}
-  namespace: elk-cluster-ns
+  namespace: {{ .Values.common.namespace }}
   labels:
     component: {{template "fullname" .}}
 spec:
