@@ -6,7 +6,7 @@ common:
 nameOverride: kibana
 replicaCount: 2
 image:
-  repository: elkacr.azurecr.io/kibana
+  repository: elkimages.azurecr.io/kibana
   tag: 1.0.0
   pullPolicy: Always
 service:

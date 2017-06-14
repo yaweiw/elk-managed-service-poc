@@ -4,7 +4,7 @@
 nameOverride: logstash
 replicaCount: 2
 image:
-  repository: elkacr.azurecr.io/logstash
+  repository: elkimages.azurecr.io/logstash
   tag: 1.0.0
   pullPolicy: Always
 service:
