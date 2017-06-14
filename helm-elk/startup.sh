@@ -1,7 +1,5 @@
 #! /bin/bash
 
-helm init
-
 # create namespace
 namespace=elk-cluster-ns
 
