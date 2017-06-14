@@ -7,4 +7,5 @@ metadata:
 provisioner: kubernetes.io/azure-disk
 parameters:
   skuName: Premium_LRS
-  location: southeastasia
+  location: westus
+  storageAccount: {{ .Values.data.storageAccount }}
