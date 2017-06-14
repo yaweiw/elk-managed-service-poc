@@ -1,5 +1,0 @@
-# requirements.yaml
-dependencies:
-- name: registry-secret
-  version: "0.0.1"
-  repository: "file://../secret"

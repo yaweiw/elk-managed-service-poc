@@ -35,6 +35,7 @@ data:
   # This count will depend on your data and computation needs.
   replicas: 2
   storageAccount: azdisksa
+  location: westus
   env:
     NODE_DATA: "true"
     NODE_MASTER: "false"
