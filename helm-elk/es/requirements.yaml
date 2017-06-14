@@ -1,5 +1,5 @@
 # requirements.yaml
 dependencies:
-- name: elknamespace
+- name: registry-secret
   version: "0.0.1"
-  repository: "file://../ns"
+  repository: "file://../secret"

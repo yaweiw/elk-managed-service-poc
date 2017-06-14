@@ -2,9 +2,9 @@ dependencies:
 - condition: ""
   enabled: false
   import-values: null
-  name: elknamespace
-  repository: file://../ns
+  name: registry-secret
+  repository: file://../secret
   tags: null
   version: 0.0.1
-digest: sha256:2892aa89fa21ebd39ae7c5bda4a5d57632be9cb940f1d5e26246a3319c518bf9
-generated: 2017-06-13T14:00:05.717981197+08:00
+digest: sha256:4b8cbb0fb4b56db144ac6a99400e670ec2e57ced60f0f22bb1159dc502f1ee11
+generated: 2017-06-14T06:29:03.627337275Z

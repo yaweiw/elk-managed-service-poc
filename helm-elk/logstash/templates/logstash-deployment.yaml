@@ -18,5 +18,15 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.port }}
+        volumeMounts:
+        - mountPath: {{ .Values.configuration.path }}
+          name: config
       imagePullSecrets:
       - name: {{ .Values.imagePullSecrets.name }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template "fullname" . }}
+            items:
+            - key: logstash.conf
+              path: logstash.conf
