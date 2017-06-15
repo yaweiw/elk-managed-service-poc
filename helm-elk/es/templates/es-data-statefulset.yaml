@@ -35,8 +35,8 @@ spec:
           capabilities:
             add:
               - IPC_LOCK
-        image: "{{ .Values.common.image.repository }}:{{ .Values.common.image.tag }}"
-        imagePullPolicy: {{ .Values.common.image.pullPolicy }}
+        image: "{{ .Values.common.registry }}/elasticsearch:{{ .Values.common.image.tag }}"
+        imagePullPolicy: {{ .Values.common.elasticsearch.image.pullPolicy }}
         env:
         - name: NAMESPACE
           valueFrom:
@@ -52,7 +52,7 @@ spec:
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
-        {{- range $key, $value :=  .Values.data.env }}
+        {{- range $key, $value :=  .Values.elasticsearch.data.env }}
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
@@ -64,7 +64,7 @@ spec:
         - name: es-persistent-storage
           mountPath: /data
       imagePullSecrets:
-      - name: {{ .Values.imagePullSecrets.name }}
+      - name: {{ .Values.common.secretName }}
   volumeClaimTemplates:
   - metadata:
       name: es-persistent-storage

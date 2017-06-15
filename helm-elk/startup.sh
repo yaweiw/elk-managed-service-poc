@@ -3,7 +3,7 @@
 # create namespace
 namespace=elk-cluster-ns
 
-helm install --set common.namespace=${namespace} ns
+helm install -f config.yaml ns
 
 # create secret
 registry_name=azure-registry
@@ -18,23 +18,11 @@ kubectl --namespace=${namespace} create secret docker-registry ${registry_name} 
 --docker-password=${registry_password} \
 --docker-email=${registry_email}
 
-# create Elastcisearch
-data_storageAccount=elks
-data_location=southeastasia
-helm install --set common.namespace=${namespace} \
---set data.storageAccount=${data_storageAccount} \
---set data.location=${data_location} \
---set image.repository=${registry_server}/es \
---set imagePullSecrets.name=${registry_name} ./es
+# create Elasticsearch
+helm install -f elasticsearch.conf ./es
 
 # create Kibana
-helm install --set common.namespace=${namespace} \
---set image.repository=${registry_server}/kibana \
---set imagePullSecrets.name=${registry_name} \
---set replicaCount=3 ./kibana
+helm install -f elasticsearch.conf ./kibana
 
 # create Logstash
-helm install --set common.namespace=${namespace} \
---set image.repository=${registry_server}/logstash \
---set imagePullSecrets.name=${registry_name} \
---set replicaCount=3 ./logstash
+helm install -f elasticsearch.conf ./logstash
