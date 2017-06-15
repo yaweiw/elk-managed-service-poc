@@ -7,7 +7,7 @@ common:
     # Uncomment this if you get the "No up-and-running site-local (private) addresses" error
     # NETWORK_HOST: "_eth0_"
     
-nameOverride: elastcisearch
+nameOverride: elasticsearch
 elasticsearch:
   image:
     repository: elkimages.azurecr.io/elasticsearch
