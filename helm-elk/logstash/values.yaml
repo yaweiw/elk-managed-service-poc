@@ -2,14 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 common:
-  namespace: elk-cluster-ns
-  secretName: azure-registry
+  namespace:
+  secretName:
 nameOverride: logstash
 logstash:
-  replicaCount: 2
+  replicaCount:
   image:
-    repository: elkimages.azurecr.io/logstash
-    tag: 1.0.0
+    #repository:
+    tag:
     pullPolicy: Always
   service:
     name: logstash
