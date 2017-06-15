@@ -18,11 +18,11 @@
 3. Make sure image registry contains elasticsearch:1.0.0, logstash:1.0.0, kibana:1.0.0. If not, follow the instructions in /docker directory.
 
 ### Install
-1. Just configure start.sh
-    1. Configure the registry's url, username, password, email
+1. Just configure start-elk.sh
+    1. Configure the registry's url, username, password, email in start-elk.sh
     2. There should be a Standard_LRS storage accout use the same Resource Group as the container service, configure the storageAccount and location.
-    3. Set replicaCount in command line parameter
-2. Launch start.sh
+    3. Config everything else in config.yaml
+2. Launch start-elk.sh
 
 ## Verify the installation
 * ```kubectl proxy```. Launch k8s portal and verify the deployment status.
