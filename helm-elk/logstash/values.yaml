@@ -1,10 +1,12 @@
 # Default values for logstash.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+common:
+  namespace: elk-cluster-ns
 nameOverride: logstash
 replicaCount: 2
 image:
-  repository: elkacr.azurecr.io/logstash
+  repository: elkimages.azurecr.io/logstash
   tag: 1.0.0
   pullPolicy: Always
 service:
@@ -13,3 +15,5 @@ service:
   port: 5043
 imagePullSecrets:
   name: azure-registry
+configuration:
+  path: /conf

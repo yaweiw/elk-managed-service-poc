@@ -1,10 +1,12 @@
 # Default values for kibana.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+common:
+  namespace: elk-cluster-ns
 nameOverride: kibana
 replicaCount: 2
 image:
-  repository: elkacr.azurecr.io/kibana
+  repository: elkimages.azurecr.io/kibana
   tag: 1.0.0
   pullPolicy: Always
 service:

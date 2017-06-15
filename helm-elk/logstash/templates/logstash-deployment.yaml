@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "fullname" . }}
-  namespace: elk-cluster-ns
+  namespace: {{ .Values.common.namespace }}
   labels:
     component: {{template "fullname" .}}
 spec:
@@ -18,5 +18,15 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.port }}
+        volumeMounts:
+        - mountPath: {{ .Values.configuration.path }}
+          name: config
       imagePullSecrets:
       - name: {{ .Values.imagePullSecrets.name }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template "fullname" . }}
+            items:
+            - key: logstash.conf
+              path: logstash.conf

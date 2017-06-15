@@ -1,5 +1,0 @@
-# requirements.yaml
-dependencies:
-- name: kibana
-  version: "0.0.1"
-  repository: "file://../kibana"
