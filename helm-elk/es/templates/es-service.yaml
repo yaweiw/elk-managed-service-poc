@@ -7,16 +7,16 @@ metadata:
     component: {{template "fullname" .}}
     role: client
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.elasticsearch.service.type }}
   selector:
     component: {{template "fullname" .}}
     role: client
   ports:
   - name: http
-    port: {{ .Values.service.httpPort }}
+    port: {{ .Values.elasticsearch.service.httpPort }}
     targetPort: 9200
     protocol: TCP
   - name: transport
-    port: {{ .Values.service.transportPort }}
+    port: {{ .Values.elasticsearch.service.transportPort }}
     targetPort: 9300
     protocol: TCP

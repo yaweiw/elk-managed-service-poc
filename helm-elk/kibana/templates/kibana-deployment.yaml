@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.kibana.common.registry }}/kibana:{{ .Values.kibana.image.tag }}"
+        image: "{{ .Values.common.registry }}/kibana:{{ .Values.kibana.image.tag }}"
         imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.kibana.service.port }}

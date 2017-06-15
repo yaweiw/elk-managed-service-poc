@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.logstash.image.repository }}:{{ .Values.logstash.image.tag }}"
+        image: "{{ .Values.common.registry }}/logstash:{{ .Values.logstash.image.tag }}"
         imagePullPolicy: {{ .Values.logstash.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.logstash.service.port }}

@@ -1,9 +1,12 @@
 #! /bin/bash
 
+# terminate once a command failed
+set -e
+
 # create namespace
 namespace=elk-cluster-ns
 
-helm install -f config.yaml ns
+helm install -f config.yaml ns 
 
 # create secret
 registry_name=azure-registry
@@ -19,10 +22,10 @@ kubectl --namespace=${namespace} create secret docker-registry ${registry_name} 
 --docker-email=${registry_email}
 
 # create Elasticsearch
-helm install -f elasticsearch.conf ./es
+helm install -f config.yaml es 
 
 # create Kibana
-helm install -f elasticsearch.conf ./kibana
+helm install -f config.yaml kibana
 
 # create Logstash
-helm install -f elasticsearch.conf ./logstash
+helm install -f config.yaml logstash
