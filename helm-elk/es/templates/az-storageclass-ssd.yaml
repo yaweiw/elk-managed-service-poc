@@ -7,5 +7,5 @@ metadata:
 provisioner: kubernetes.io/azure-disk
 parameters:
   skuName: Premium_LRS
-  location: {{ .Values.data.location }}
-  storageAccount: {{ .Values.data.storageAccount }}
+  location: {{ .Values.elasticsearch.data.location }}
+  storageAccount: {{ .Values.elasticsearch.data.storageAccount }}

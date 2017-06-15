@@ -1,0 +1,16 @@
+common:
+  namespace: elk-cluster-ns
+  secretName: azure-registry
+  registry: elkimages.azurecr.io
+
+elasticsearch:
+  client.replicas: 2
+  master.replicas: 3
+  data:
+    replicas: 2
+    storageAccount: elks
+    data.location: southeastasia
+
+
+kibana.replicaCount: 3
+logstash.replicaCount: 3

@@ -6,7 +6,7 @@ metadata:
   labels:
     component: {{template "fullname" .}}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.kibana.replicaCount }}
   template:
     metadata:
       labels:
@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: "{{ .Values.common.registry }}/kibana:{{ .Values.kibana.image.tag }}"
+        imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
         ports:
-        - containerPort: {{ .Values.service.port }}
+        - containerPort: {{ .Values.kibana.service.port }}
       imagePullSecrets:
-      - name: {{ .Values.imagePullSecrets.name }}
+      - name: {{ .Values.common.secretName }}

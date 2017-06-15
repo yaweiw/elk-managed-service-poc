@@ -7,7 +7,7 @@ metadata:
     component: {{template "fullname" .}}
     role: master
 spec:
-  replicas: {{ .Values.master.replicas }}
+  replicas: {{ .Values.elasticsearch.master.replicas }}
   template:
     metadata:
       labels:
@@ -38,8 +38,8 @@ spec:
             add:
               - IPC_LOCK
               - SYS_RESOURCE
-        image: "{{ .Values.common.image.repository }}:{{ .Values.common.image.tag }}"
-        imagePullPolicy: {{ .Values.common.image.pullPolicy }}
+        image: "{{ .Values.common.registry }}/elasticsearch:{{ .Values.elasticsearch.image.tag }}"
+        imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
         env:
         - name: NAMESPACE
           valueFrom:
@@ -55,7 +55,7 @@ spec:
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
-        {{- range $key, $value :=  .Values.master.env }}
+        {{- range $key, $value :=  .Values.elasticsearch.master.env }}
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
@@ -67,7 +67,7 @@ spec:
         - name: storage
           mountPath: /data
       imagePullSecrets:
-      - name: {{ .Values.imagePullSecrets.name }}
+      - name: {{ .Values.common.secretName }}
       volumes:
         - emptyDir:
             medium: ""

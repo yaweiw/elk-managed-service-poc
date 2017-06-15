@@ -6,10 +6,10 @@ metadata:
   labels:
     component: {{template "fullname" .}}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.kibana.service.type }}
   ports:
-  - port: {{ .Values.service.port }}
+  - port: {{ .Values.kibana.service.port }}
     protocol: TCP
-    name: {{ .Values.service.name }}
+    name: {{ .Values.kibana.service.name }}
   selector:
     component: {{ template "fullname" . }}

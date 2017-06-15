@@ -6,10 +6,10 @@ metadata:
   labels:
     component: {{template "fullname" .}}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.logstash.service.type }}
   ports:
-  - port: {{ .Values.service.port }}
+  - port: {{ .Values.logstash.service.port }}
     protocol: TCP
-    name: {{ .Values.service.name }}
+    name: {{ .Values.logstash.service.name }}
   selector:
     component: {{ template "fullname" . }}

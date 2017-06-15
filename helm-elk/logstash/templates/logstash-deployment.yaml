@@ -6,7 +6,7 @@ metadata:
   labels:
     component: {{template "fullname" .}}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.logstash.replicaCount }}
   template:
     metadata:
       labels:
@@ -14,15 +14,15 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: "{{ .Values.common.registry }}/logstash:{{ .Values.logstash.image.tag }}"
+        imagePullPolicy: {{ .Values.logstash.image.pullPolicy }}
         ports:
-        - containerPort: {{ .Values.service.port }}
+        - containerPort: {{ .Values.logstash.service.port }}
         volumeMounts:
-        - mountPath: {{ .Values.configuration.path }}
+        - mountPath: {{ .Values.logstash.configuration.path }}
           name: config
       imagePullSecrets:
-      - name: {{ .Values.imagePullSecrets.name }}
+      - name: {{ .Values.common.secretName }}
       volumes:
         - name: config
           configMap:
