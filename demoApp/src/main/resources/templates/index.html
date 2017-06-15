@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template :: header">
+</head>
+
+<body>
+<nav th:replace="template :: nav('Home')"></nav>
+
+<div class="container">
+    <h2>Search Message</h2>
+    <form class="search">
+        <input name="pattern" type="text" class="form-control" placeholder="pattern" required autofocus>
+        <button style="margin-top: 10px" class="btn btn-primary btn-block" type="submit">Search</button>
+    </form>
+
+    <h2>Message Found</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${messages}">
+                <td th:text="${message.content}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<footer th:replace="template :: footer"></footer>
+
+</body>
+
+</html>
