@@ -9,7 +9,7 @@ metadata:
     role: data
 spec:
   serviceName: {{template "fullname" .}}-data
-  replicas: {{.Values.elastic.elasticsearch.replicas}}
+  replicas: {{.Values.elasticsearch.data.replicas}}
   template:
     metadata:
       labels:
