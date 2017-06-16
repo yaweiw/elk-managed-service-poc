@@ -13,9 +13,9 @@
 ## Install ELK using helm
 ### Prerequisite
 1. Have a kubernetes cluster.
-1. Install helm. [Install Helm](https://github.com/kubernetes/helm/blob/master/docs/install.md)
-2. Make sure ```helm init``` finishes.
-3. Make sure image registry contains elasticsearch:1.0.0, logstash:1.0.0, kibana:1.0.0. If not, follow the instructions in /docker directory.
+2. Install helm. [Install Helm](https://github.com/kubernetes/helm/blob/master/docs/install.md)
+3. Make sure ```helm init``` finishes.
+4. Make sure image registry contains elasticsearch:1.0.0, logstash:1.0.0, kibana:1.0.0. If not, follow the instructions in /docker directory.
 
 ### Install
 1. Just configure start-elk.sh

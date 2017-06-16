@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template :: header">
+</head>
+
+<body>
+<nav th:replace="template :: nav('Insert')"></nav>
+
+<div class="container">
+    <h2 style="text-align: center" th:text="${status}"></h2>
+
+    <h2>Insert Message</h2>
+    <form class="insert" th:object="${message}" method="post">
+        <input type="text" th:field="*{content}" class="form-control" placeholder="content"
+               required autofocus>
+        <button style="margin-top: 10px" class="btn btn-primary btn-block" type="submit">Insert</button>
+    </form>
+
+</div>
+
+
+<footer th:replace="template :: footer"></footer>
+
+</body>
+
+</html>
