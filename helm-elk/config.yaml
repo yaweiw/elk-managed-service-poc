@@ -7,11 +7,11 @@ elasticsearch:
   image:
     tag: 1.0.0
   client:
-    replicas: 1
+    replicas: 2
   master:
-    replicas: 1
+    replicas: 3
   data:
-    replicas: 1
+    replicas: 2
     storageAccount: azdisksa
     location: westus
 
